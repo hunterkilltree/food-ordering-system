@@ -17,6 +17,9 @@
 
     <!-- packing: pom vs jar-->
     <packaging>pom</packaging>
+    <modules>
+        <module>order-service</module>
+    </modules>
 
     <properties>
         <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
