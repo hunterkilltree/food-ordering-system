@@ -1,5 +1,7 @@
 package com.food.ordering.system.order.service.domain.valueobject;
 
+import java.util.UUID;
+
 /**
  * StreetAddress
  */
@@ -8,6 +10,13 @@ public class StreetAddress {
     private final String city;
     private final String postalCode;
     private final String street;
+
+    public StreetAddress(UUID id, String street, String postalCode, String city) {
+        this.id = id;
+        this.street = street;
+        this.postalCode = postalCode;
+        this.city = city;
+    }
 
     public UUID getId() {
         return id;
