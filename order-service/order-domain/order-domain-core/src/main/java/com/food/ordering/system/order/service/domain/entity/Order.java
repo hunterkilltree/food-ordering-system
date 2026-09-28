@@ -37,7 +37,7 @@ public class Order extends AggregateRoot<OrderId> {
         failureMessages = builder.failureMessages;
     }
 
-    private void initializeOrder() {
+    public void initializeOrder() {
         setId(new OrderId(UUID.randomUUID()));
         trackingId = new TrackingId(UUID.randomUUID());
         orderStatus = OrderStatus.PENDING;
@@ -78,6 +78,10 @@ public class Order extends AggregateRoot<OrderId> {
         }
         orderStatus = OrderStatus.CANCELLED;
         updateFailureMessages(failureMessages);
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
     }
 
     private void updateFailureMessages(List<String> failureMessages) {
