@@ -1,8 +1,10 @@
 package com.food.ordering.system.order.service.domain.ports.input.message.listener.payment;
 
+import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
+
 public interface PaymentResponseMessageListener {
 
-    // TODO: void paymentCompleted(PaymentResponse
-    // TODO: void paymentCancelled(PaymentResponse
+    void paymentCompleted(PaymentResponse paymentResponse);
 
+    void paymentCancelled(PaymentResponse paymentResponse);
 }

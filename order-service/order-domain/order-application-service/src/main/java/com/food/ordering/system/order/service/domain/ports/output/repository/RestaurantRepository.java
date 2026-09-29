@@ -1,6 +1,9 @@
 package com.food.ordering.system.order.service.domain.ports.output.repository;
 
-public interface RestaurantRepository {
-    //TODO: Optional<Restaurant> findRestaurantInformation(Restaurant
+import com.food.ordering.system.order.service.domain.entity.Restaurant;
 
+import java.util.Optional;
+
+public interface RestaurantRepository {
+    Optional<Restaurant> findRestaurantInformation(Restaurant restaurant);
 }
