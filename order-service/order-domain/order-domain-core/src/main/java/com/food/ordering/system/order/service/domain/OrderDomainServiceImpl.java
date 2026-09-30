@@ -6,12 +6,15 @@ import com.food.ordering.system.order.service.domain.entity.Restaurant;
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent;
 import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
+import com.food.ordering.system.domain.valueobject.ProductId;
 import com.food.ordering.system.order.service.domain.exception.OrderDomainException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class OrderDomainServiceImpl implements OrderDomainService{
@@ -62,14 +65,15 @@ public class OrderDomainServiceImpl implements OrderDomainService{
     }
 
     private void setOrderProductInformation(Order order, Restaurant restaurant) {
-        // TODO: Optimize to reduce complexity later
-        order.getItems().forEach(orderItem ->
-                restaurant.getProducts().forEach(restaurantProduct -> {
-                    Product currentProduct = orderItem.getProduct();
-                    if (currentProduct.equals(restaurantProduct)) {
-                        currentProduct.updateWithConfirmedNameAndPrice(restaurantProduct.getName(), restaurantProduct.getPrice());
-                    }
-                }));
+        Map<ProductId, Product> restaurantProductsById = restaurant.getProducts().stream()
+                .collect(Collectors.toMap(Product::getId, product -> product));
 
+        order.getItems().forEach(orderItem -> {
+            Product currentProduct = orderItem.getProduct();
+            Product restaurantProduct = restaurantProductsById.get(currentProduct.getId());
+            if (restaurantProduct != null) {
+                currentProduct.updateWithConfirmedNameAndPrice(restaurantProduct.getName(), restaurantProduct.getPrice());
+            }
+        });
     }
 }
