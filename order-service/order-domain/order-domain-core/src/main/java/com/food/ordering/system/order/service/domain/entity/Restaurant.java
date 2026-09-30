@@ -9,6 +9,12 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
     private final List<Product> products;
     private boolean active;
 
+    // Builder pattern (not a public constructor) to stay consistent with
+    // Order/OrderItem in this same package, and because callers build a
+    // Restaurant in two different shapes: a full entity from persistence,
+    // and a lookup-only entity (id + product ids, no name/active) used as
+    // a query argument to RestaurantRepository.findRestaurantInformation.
+    // A single telescoping constructor couldn't express both cleanly.
     private Restaurant(Builder builder) {
         super.setId(builder.restaurantId);
         products = builder.products;

@@ -12,8 +12,15 @@ import org.springframework.validation.annotation.Validated;
 @Slf4j
 @Validated // enable valid annotation in interface
 @Service
-// remove public modifier
-// because the interface and the implementation are in the same package
+// Package-private on purpose, not public: nothing outside this module ever
+// references OrderApplicationServiceImpl directly — callers (e.g. a REST
+// controller in order-application) depend only on the OrderApplicationService
+// interface. Spring can still instantiate and wire a package-private
+// @Service via component scanning/reflection, so there's no functional
+// need to widen the type's visibility beyond this package.
+// (Note: the interface itself lives one package down, in ports.input.service
+// — they aren't literally the same package, but nothing here needs the impl
+// type to be visible there either, since the interface is what's exported.)
 class OrderApplicationServiceImpl implements OrderApplicationService {
 
     private final OrderCreateCommandHandler orderCreateCommandHandler;

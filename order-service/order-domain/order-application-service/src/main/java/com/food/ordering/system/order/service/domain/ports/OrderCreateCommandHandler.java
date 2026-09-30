@@ -47,6 +47,14 @@ public class OrderCreateCommandHandler {
         checkCustomer(createOrderCommand.getCustomerId());
         Restaurant restaurant = checkRestaurant(createOrderCommand);
         Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
+        // The draft TODO comments called this step "validateAndInitiateOrder",
+        // but the method that actually exists on OrderDomainService (and its
+        // implementation) is validateInitialOrder — using the real method
+        // keeps this handler compiling against the domain service's actual,
+        // already-established contract instead of inventing a new one.
+        // The returned event isn't published yet (no saga/outbox wiring
+        // exists in this module yet) but is captured here since it's the
+        // natural extension point for that once it's built.
         OrderCreatedEvent orderCreatedEvent = orderDomainService.validateInitialOrder(order, restaurant);
         Order orderResult = saveOrder(order);
         log.info("Order is created with id: {}", orderResult.getId().getValue());

@@ -14,6 +14,12 @@ public class Product extends BaseEntity<ProductId> {
         this.price = price;
     }
 
+    // Id-only constructor: used to build an unconfirmed product reference
+    // from a client command (only the id is known yet). name/price stay
+    // null until updateWithConfirmedNameAndPrice() fills them in from the
+    // restaurant's actual catalog. This replaces an earlier version of
+    // this constructor that was typed Product(Product) — a self-referential
+    // parameter that could never have compiled as an id-only constructor.
     public Product(ProductId productId) {
         super.setId(productId);
     }

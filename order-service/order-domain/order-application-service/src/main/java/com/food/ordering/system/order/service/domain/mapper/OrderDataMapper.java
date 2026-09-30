@@ -56,6 +56,11 @@ public class OrderDataMapper {
                 .build();
     }
 
+    // Fully-qualified rather than imported: the dto.create package and the
+    // entity package each have their own class named OrderItem (command-side
+    // vs domain-side), and Java won't let both be imported under the same
+    // simple name in one file. Spelling one out avoids the name clash
+    // without renaming either OrderItem type.
     private List<com.food.ordering.system.order.service.domain.entity.OrderItem> orderItemsToOrderItemEntities(
             List<com.food.ordering.system.order.service.domain.dto.create.OrderItem> items) {
         return items.stream()
@@ -69,6 +74,14 @@ public class OrderDataMapper {
     }
 
     private StreetAddress orderAddressToStreetAddress(OrderAddress orderAddress) {
+        // StreetAddress's 4th field is named "city", but the OrderAddress
+        // command only carries street/postalCode/country (no city field).
+        // Rather than rename either the command or the value object here —
+        // which would change what CreateOrderCommand means — country is
+        // passed into that slot as the closest available field. Worth
+        // revisiting: either add a real city field to OrderAddress, or
+        // rename StreetAddress's field to country, whichever matches the
+        // intended address model.
         return new StreetAddress(UUID.randomUUID(), orderAddress.getStreet(), orderAddress.getPostalCode(),
                 orderAddress.getCountry());
     }

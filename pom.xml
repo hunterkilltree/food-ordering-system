@@ -24,6 +24,12 @@
 
     <properties>
         <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
+        <!-- spring-boot-starter-parent 2.6.7 manages an older Lombok whose
+             annotation processor can't run on JDK 21's javac (release is
+             set to 21 below), causing a NoSuchFieldError on any class using
+             a Lombok annotation (e.g. @Slf4j). Overriding just this one
+             managed version to a JDK21-compatible release fixes the build
+             without upgrading the whole Spring Boot parent. -->
         <lombok.version>1.18.32</lombok.version>
     </properties>
 

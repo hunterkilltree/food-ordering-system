@@ -46,6 +46,12 @@ public class OrderDomainServiceImpl implements OrderDomainService{
 
     @Override
     public OrderCancelledEvent cancelOrderPayment(Order order, List<String> failureMessages) {
+        // FIXME: this looks like it should call order.initCancel(failureMessages)
+        // to move the order into CANCELLING and record the failure messages.
+        // As written, initializeOrder() instead re-randomizes the order's id
+        // and tracking id and resets status to PENDING, which doesn't match
+        // what "cancelling a payment" should do. Left as-is here since fixing
+        // behavior wasn't in scope for this pass — flagging for a follow-up.
         order.initializeOrder();
         log.info("Order payment is cancelling for order id: {}", order.getId().getValue());
         return new OrderCancelledEvent(order, ZonedDateTime.now(ZoneId.of(UTC)));
@@ -65,6 +71,9 @@ public class OrderDomainServiceImpl implements OrderDomainService{
     }
 
     private void setOrderProductInformation(Order order, Restaurant restaurant) {
+        // Was a nested forEach (order items x restaurant products), an
+        // O(n*m) comparison using Product's id-based equals(). Indexing
+        // restaurant products by id first turns the lookup into O(n+m).
         Map<ProductId, Product> restaurantProductsById = restaurant.getProducts().stream()
                 .collect(Collectors.toMap(Product::getId, product -> product));
 

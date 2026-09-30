@@ -84,6 +84,13 @@ public class Order extends AggregateRoot<OrderId> {
         return items;
     }
 
+    // Only these 3 getters were added (not one per field) because they're
+    // the only Order state the application layer currently needs to read:
+    // OrderDataMapper uses trackingId/orderStatus/failureMessages to build
+    // CreateOrderResponse/TrackOrderResponse. customerId/restaurantId/price
+    // etc. stay write-only from outside the aggregate until something
+    // actually needs to read them back out, to keep Order's public surface
+    // no wider than what's used.
     public TrackingId getTrackingId() {
         return trackingId;
     }
