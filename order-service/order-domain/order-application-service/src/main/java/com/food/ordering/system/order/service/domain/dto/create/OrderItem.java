@@ -8,6 +8,8 @@ import lombok.NonNull;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+// Command-side line item — distinct from entity.OrderItem (same simple
+// name, different package); OrderDataMapper fully-qualifies one of them.
 @Builder
 @Getter
 @AllArgsConstructor

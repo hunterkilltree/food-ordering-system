@@ -9,6 +9,9 @@ import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
 
 /**
+ * Domain Service: business logic spanning two aggregates (Order,
+ * Restaurant), so it can't live on either entity alone.
+ *
  * Return domain event form the domain service
  * This means the event firing process will be on the called service
  * which will be on the caller service 

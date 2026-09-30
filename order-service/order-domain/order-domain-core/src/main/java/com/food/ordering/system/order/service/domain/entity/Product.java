@@ -4,6 +4,9 @@ import com.food.ordering.system.domain.entity.BaseEntity;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.ProductId;
 
+// Entity: only exists as part of a Restaurant's catalog. Equality by
+// ProductId (inherited) is what lets OrderDomainServiceImpl match an
+// order's id-only product to the restaurant's real one.
 public class Product extends BaseEntity<ProductId> {
     private String name;
     private Money price;
@@ -14,7 +17,10 @@ public class Product extends BaseEntity<ProductId> {
         this.price = price;
     }
 
-    public Product(Product productId) {
+    // Id-only reference (name/price filled in later by
+    // updateWithConfirmedNameAndPrice()); used for unconfirmed products
+    // from a command.
+    public Product(ProductId productId) {
         super.setId(productId);
     }
 

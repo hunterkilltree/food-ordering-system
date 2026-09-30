@@ -2,9 +2,7 @@ package com.food.ordering.system.order.service.domain.valueobject;
 
 import java.util.UUID;
 
-/**
- * StreetAddress
- */
+// Value Object for a delivery address: equality by field values, not id.
 public class StreetAddress {
     private final UUID id;
     private final String city;

@@ -9,6 +9,8 @@ public class Restaurant extends AggregateRoot<RestaurantId> {
     private final List<Product> products;
     private boolean active;
 
+    // Builder: also used to build a lookup-only Restaurant (id + product
+    // ids only) as a query argument to RestaurantRepository.
     private Restaurant(Builder builder) {
         super.setId(builder.restaurantId);
         products = builder.products;

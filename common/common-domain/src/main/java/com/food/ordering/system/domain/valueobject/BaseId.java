@@ -2,6 +2,9 @@ package com.food.ordering.system.domain.valueobject;
 
 import java.util.Objects;
 
+// Value Object base for typed ids (CustomerId, OrderId, ...): a type-safe
+// wrapper so a CustomerId can't be passed where a RestaurantId is expected.
+// Equality by value, not identity.
 public abstract class BaseId<T> {
     private final T value;
 

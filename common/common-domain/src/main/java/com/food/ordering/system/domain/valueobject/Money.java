@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
+// Value Object for a monetary amount. Wraps BigDecimal so every operation
+// rounds consistently (HALF_EVEN, 2dp — see setScale()) instead of ad hoc.
+// Immutable: every op returns a new Money.
 public class Money {
     private final BigDecimal amount;
 

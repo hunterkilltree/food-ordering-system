@@ -14,6 +14,9 @@ import com.food.ordering.system.order.service.domain.valueobject.OrderItemId;
 import com.food.ordering.system.order.service.domain.valueobject.StreetAddress;
 import com.food.ordering.system.order.service.domain.valueobject.TrackingId;
 
+// Aggregate root. Built via Builder (new order vs. rehydrated from
+// persistence). pay()/approve()/initCancel()/cancel() are the only way
+// orderStatus changes, each checking the current state first.
 public class Order extends AggregateRoot<OrderId> {
     private final CustomerId customerId;
     private final RestaurantId restaurantId;
@@ -82,6 +85,20 @@ public class Order extends AggregateRoot<OrderId> {
 
     public List<OrderItem> getItems() {
         return items;
+    }
+
+    // Only the 3 fields the application layer actually reads are exposed;
+    // the rest stay write-only from outside the aggregate.
+    public TrackingId getTrackingId() {
+        return trackingId;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public List<String> getFailureMessages() {
+        return failureMessages;
     }
 
     private void updateFailureMessages(List<String> failureMessages) {

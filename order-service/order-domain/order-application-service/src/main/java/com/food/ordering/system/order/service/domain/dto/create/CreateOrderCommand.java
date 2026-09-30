@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
+// Input Command for "create order" (CQRS naming). Plain primitives/UUIDs,
+// not domain value objects — OrderDataMapper translates it into the domain
+// model. @NonNull fails fast at construction.
 @Getter
 @Builder
 @AllArgsConstructor

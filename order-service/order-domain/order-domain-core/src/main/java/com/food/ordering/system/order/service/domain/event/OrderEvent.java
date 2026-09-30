@@ -5,6 +5,9 @@ import java.time.ZonedDateTime;
 import com.food.ordering.system.domain.event.DomainEvent;
 import com.food.ordering.system.order.service.domain.entity.Order;
 
+// Base for OrderCreatedEvent/OrderPaidEvent/OrderCancelledEvent: shared
+// order+timestamp fields. Separate subclasses (not one type + an
+// eventType field) keep listeners type-safe about which event they get.
 public abstract class OrderEvent implements DomainEvent<Order> {
 
     private final Order order;

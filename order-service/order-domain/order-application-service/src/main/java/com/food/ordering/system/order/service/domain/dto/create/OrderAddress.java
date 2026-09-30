@@ -7,6 +7,8 @@ import lombok.NonNull;
 
 import javax.validation.constraints.Max;
 
+// Note: @Max is a numeric constraint; on a String it's a silent no-op —
+// a length limit here would need @Size(max=...) instead.
 @Builder
 @Getter
 @AllArgsConstructor

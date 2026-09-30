@@ -8,6 +8,7 @@ import lombok.Getter;
 import java.time.Instant;
 import java.util.List;
 
+// Inbound message from the restaurant service — see PaymentResponse.
 @Getter
 @Builder
 @AllArgsConstructor

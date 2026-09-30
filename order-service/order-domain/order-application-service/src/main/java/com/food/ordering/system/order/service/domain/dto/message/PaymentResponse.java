@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
+// Inbound message from the payment service. No @NonNull (not this
+// service's shape to enforce); ids are plain Strings, matching the
+// cross-service message schema.
 @Getter
 @Builder
 @AllArgsConstructor

@@ -2,6 +2,8 @@ package com.food.ordering.system.domain.entity;
 
 import java.util.Objects;
 
+// DDD Entity base: equality by id only (unlike BaseId, a Value Object,
+// which compares all fields).
 public abstract class BaseEntity<ID> {
     private ID id;
 

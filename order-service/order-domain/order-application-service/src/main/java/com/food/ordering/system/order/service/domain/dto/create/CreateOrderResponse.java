@@ -8,6 +8,8 @@ import lombok.NonNull;
 
 import java.util.UUID;
 
+// Output Response for "create order". orderId is actually the order's
+// TrackingId value, not its internal OrderId (which stays internal).
 @Builder
 @Getter
 @AllArgsConstructor

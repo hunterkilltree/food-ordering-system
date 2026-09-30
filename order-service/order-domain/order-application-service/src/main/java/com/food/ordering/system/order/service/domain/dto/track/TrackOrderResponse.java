@@ -9,6 +9,7 @@ import lombok.NonNull;
 import java.util.List;
 import java.util.UUID;
 
+// failureMessages has no @NonNull: legitimately null when nothing failed.
 @Builder
 @Getter
 @AllArgsConstructor
