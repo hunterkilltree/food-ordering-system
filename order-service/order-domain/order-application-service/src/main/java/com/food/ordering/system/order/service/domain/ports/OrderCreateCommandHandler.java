@@ -19,6 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
+// Orchestrates the "create order" use case: this is the application layer
+// (as opposed to OrderDomainService, a domain layer service) — it doesn't
+// contain business rules itself, it coordinates calls to things that do
+// (repositories for lookups/persistence, OrderDomainService for domain
+// validation, OrderDataMapper for translation) inside one @Transactional
+// boundary. Split out from OrderApplicationServiceImpl (rather than put
+// directly there) so each use case's orchestration logic has its own
+// focused class instead of one impl class accumulating every use case.
 @Slf4j
 @Component
 public class OrderCreateCommandHandler {

@@ -4,6 +4,17 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
 
+/**
+ * Value Object wrapping a monetary amount. Money exists instead of passing
+ * BigDecimal around directly so every arithmetic operation (add/subtract/
+ * multiply) goes through the same rounding rule in one place — setScale()
+ * below fixes every result to 2 decimal places using HALF_EVEN ("banker's
+ * rounding": ties round to the nearest even digit), which avoids the slight
+ * upward bias plain HALF_UP rounding introduces over many transactions.
+ * Immutable: every operation returns a new Money rather than mutating this
+ * one, so a Money value can be shared/compared safely without defensive
+ * copying.
+ */
 public class Money {
     private final BigDecimal amount;
 

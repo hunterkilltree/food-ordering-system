@@ -4,6 +4,13 @@ import com.food.ordering.system.domain.entity.BaseEntity;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.ProductId;
 
+// Entity (extends BaseEntity, not AggregateRoot) because a Product only
+// exists as part of a Restaurant's catalog — nothing loads or saves a
+// Product on its own. Its inherited equals()/hashCode() compare only
+// ProductId (BaseEntity's identity semantics — see its Javadoc), which is
+// exactly what lets OrderDomainServiceImpl match an order's id-only
+// Product reference to the restaurant's real Product by id, even though
+// name/price differ between the two instances until confirmed.
 public class Product extends BaseEntity<ProductId> {
     private String name;
     private Money price;

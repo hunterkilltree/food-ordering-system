@@ -18,6 +18,13 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+// Anti-corruption layer between the application boundary (Command/Query/
+// Response DTOs, shaped for the outside world: raw UUIDs, BigDecimal) and
+// the domain model (Order, Restaurant, ... shaped by domain rules: value
+// objects, invariants). Keeping this translation in one dedicated class
+// means neither side needs to know about the other's representation —
+// domain entities stay free of DTO/serialization concerns, and DTOs stay
+// free of domain types.
 @Component
 public class OrderDataMapper {
 

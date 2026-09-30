@@ -7,6 +7,12 @@ import lombok.NonNull;
 
 import javax.validation.constraints.Max;
 
+// Note: @Max is a numeric-range constraint (checks a number's value is
+// <= the given max); applied to a String field like this it's a no-op —
+// Bean Validation silently ignores constraints that don't apply to the
+// annotated type. A length limit on these Strings would need @Size(max=...)
+// instead. Left as-is here (fixing it wasn't asked for) but worth knowing
+// this isn't actually enforcing anything today.
 @Builder
 @Getter
 @AllArgsConstructor

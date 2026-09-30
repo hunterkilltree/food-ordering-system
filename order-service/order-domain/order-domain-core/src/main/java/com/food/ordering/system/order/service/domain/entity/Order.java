@@ -14,6 +14,18 @@ import com.food.ordering.system.order.service.domain.valueobject.OrderItemId;
 import com.food.ordering.system.order.service.domain.valueobject.StreetAddress;
 import com.food.ordering.system.order.service.domain.valueobject.TrackingId;
 
+// The aggregate root for this bounded context (see AggregateRoot's
+// Javadoc): the only entry point through which an order and its items are
+// read and mutated. The constructor is private and construction goes
+// through Builder instead, because an Order can arrive in two different
+// shapes — a brand-new order from a CreateOrderCommand (no id/trackingId
+// yet, set later by initializeOrder()) vs. one being rehydrated from
+// persistence (every field already known) — and a single public
+// constructor couldn't express both without an awkward number of
+// optional-looking parameters. pay()/approve()/initCancel()/cancel() are
+// the only way orderStatus changes, and each checks the current status
+// first — that's what stops the aggregate from ever being left in an
+// illegal state (e.g. approving an order that hasn't been paid).
 public class Order extends AggregateRoot<OrderId> {
     private final CustomerId customerId;
     private final RestaurantId restaurantId;

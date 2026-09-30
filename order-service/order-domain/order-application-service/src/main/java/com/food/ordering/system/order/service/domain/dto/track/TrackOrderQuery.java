@@ -7,6 +7,10 @@ import lombok.NonNull;
 
 import java.util.UUID;
 
+// The input Query for the "track order" use case (read-only, as opposed to
+// CreateOrderCommand which changes state — see its comment for the
+// Command/Query naming). Callers look an order up by its TrackingId value,
+// not its internal OrderId, matching what CreateOrderResponse hands back.
 @Builder
 @Getter
 @AllArgsConstructor

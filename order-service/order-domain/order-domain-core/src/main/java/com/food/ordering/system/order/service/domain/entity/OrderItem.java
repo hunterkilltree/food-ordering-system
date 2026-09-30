@@ -5,6 +5,13 @@ import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.order.service.domain.valueobject.OrderItemId;
 
+// Entity, not an AggregateRoot: OrderItem only makes sense inside an Order
+// and is never loaded/saved on its own — Order is the aggregate root and
+// consistency boundary for the whole order+items cluster (see
+// AggregateRoot's Javadoc). That's also why initializeOrderItem() and
+// isPriceValid() below are package-private rather than public: only Order
+// (same package) is allowed to assign an OrderItem's id or ask it to
+// validate itself; outside callers go through Order, not OrderItem directly.
 public class OrderItem extends BaseEntity<OrderItemId> {
     private OrderId orderId;
     private final Product product;
