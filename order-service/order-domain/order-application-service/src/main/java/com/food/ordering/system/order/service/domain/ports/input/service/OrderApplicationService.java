@@ -7,9 +7,16 @@ import com.food.ordering.system.order.service.domain.dto.track.TrackOrderRespons
 
 import javax.validation.Valid;
 
+// Application Service is the first contract point to the outside in DDD:
+// it's the boundary a driving adapter (e.g. a REST controller in
+// order-application, not written yet) calls into, and it forwards that
+// call to the domain service and entities to complete the actual business
+// logic (see OrderApplicationServiceImpl -> OrderCreateCommandHandler/
+// OrderTrackCommandHandler -> OrderDomainService -> Order). It holds no
+// business rules of its own — it orchestrates.
+//
 // Primary input port: the single use-case boundary a driving adapter
-// (e.g. a REST controller in order-application, not written yet) depends
-// on. It's an interface — implemented package-privately by
+// depends on. It's an interface — implemented package-privately by
 // OrderApplicationServiceImpl — so that boundary is a stable, mockable
 // contract independent of how the use cases are actually orchestrated.
 // @Valid here (combined with @Validated on the implementation class)
