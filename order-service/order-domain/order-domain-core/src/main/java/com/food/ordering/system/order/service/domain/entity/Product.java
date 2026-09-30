@@ -4,13 +4,9 @@ import com.food.ordering.system.domain.entity.BaseEntity;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.ProductId;
 
-// Entity (extends BaseEntity, not AggregateRoot) because a Product only
-// exists as part of a Restaurant's catalog — nothing loads or saves a
-// Product on its own. Its inherited equals()/hashCode() compare only
-// ProductId (BaseEntity's identity semantics — see its Javadoc), which is
-// exactly what lets OrderDomainServiceImpl match an order's id-only
-// Product reference to the restaurant's real Product by id, even though
-// name/price differ between the two instances until confirmed.
+// Entity: only exists as part of a Restaurant's catalog. Equality by
+// ProductId (inherited) is what lets OrderDomainServiceImpl match an
+// order's id-only product to the restaurant's real one.
 public class Product extends BaseEntity<ProductId> {
     private String name;
     private Money price;
@@ -21,12 +17,9 @@ public class Product extends BaseEntity<ProductId> {
         this.price = price;
     }
 
-    // Id-only constructor: used to build an unconfirmed product reference
-    // from a client command (only the id is known yet). name/price stay
-    // null until updateWithConfirmedNameAndPrice() fills them in from the
-    // restaurant's actual catalog. This replaces an earlier version of
-    // this constructor that was typed Product(Product) — a self-referential
-    // parameter that could never have compiled as an id-only constructor.
+    // Id-only reference (name/price filled in later by
+    // updateWithConfirmedNameAndPrice()); used for unconfirmed products
+    // from a command.
     public Product(ProductId productId) {
         super.setId(productId);
     }

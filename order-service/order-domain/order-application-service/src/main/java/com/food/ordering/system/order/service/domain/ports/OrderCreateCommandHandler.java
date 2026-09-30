@@ -19,14 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
-// Orchestrates the "create order" use case: this is the application layer
-// (as opposed to OrderDomainService, a domain layer service) — it doesn't
-// contain business rules itself, it coordinates calls to things that do
-// (repositories for lookups/persistence, OrderDomainService for domain
-// validation, OrderDataMapper for translation) inside one @Transactional
-// boundary. Split out from OrderApplicationServiceImpl (rather than put
-// directly there) so each use case's orchestration logic has its own
-// focused class instead of one impl class accumulating every use case.
+// Orchestrates "create order": coordinates repositories, OrderDomainService,
+// and OrderDataMapper inside one @Transactional boundary. No business
+// rules of its own. Split from OrderApplicationServiceImpl so each use
+// case gets its own focused class.
 @Slf4j
 @Component
 public class OrderCreateCommandHandler {
@@ -55,14 +51,8 @@ public class OrderCreateCommandHandler {
         checkCustomer(createOrderCommand.getCustomerId());
         Restaurant restaurant = checkRestaurant(createOrderCommand);
         Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
-        // The draft TODO comments called this step "validateAndInitiateOrder",
-        // but the method that actually exists on OrderDomainService (and its
-        // implementation) is validateInitialOrder — using the real method
-        // keeps this handler compiling against the domain service's actual,
-        // already-established contract instead of inventing a new one.
-        // The returned event isn't published yet (no saga/outbox wiring
-        // exists in this module yet) but is captured here since it's the
-        // natural extension point for that once it's built.
+        // The event isn't published yet (no saga/outbox wiring exists yet);
+        // captured here as the extension point for that.
         OrderCreatedEvent orderCreatedEvent = orderDomainService.validateInitialOrder(order, restaurant);
         Order orderResult = saveOrder(order);
         log.info("Order is created with id: {}", orderResult.getId().getValue());

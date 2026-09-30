@@ -4,10 +4,7 @@ import java.time.ZonedDateTime;
 
 import com.food.ordering.system.order.service.domain.entity.Order;
 
-// Fired from OrderDomainService.payOrder() once payment succeeds and the
-// order moves PENDING -> PAID. Consumed downstream by
-// OrderPaidRestaurantRequestMessagePublisher to ask the restaurant to
-// approve the order.
+// Fired after payOrder(); consumed to request restaurant approval.
 public class OrderPaidEvent extends OrderEvent {
 
     public OrderPaidEvent(Order order, ZonedDateTime createdAt) {

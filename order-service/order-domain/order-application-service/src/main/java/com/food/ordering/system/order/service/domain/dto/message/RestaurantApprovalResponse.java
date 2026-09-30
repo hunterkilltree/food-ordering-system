@@ -8,9 +8,7 @@ import lombok.Getter;
 import java.time.Instant;
 import java.util.List;
 
-// Inbound message from the restaurant service (consumed by
-// RestaurantApprovalResponseMessageListener) — see PaymentResponse's
-// comment for why this has no @NonNull and uses plain String ids.
+// Inbound message from the restaurant service — see PaymentResponse.
 @Getter
 @Builder
 @AllArgsConstructor

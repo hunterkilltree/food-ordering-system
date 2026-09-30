@@ -12,10 +12,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-// Orchestrates the "track order" use case — see OrderCreateCommandHandler's
-// comment for why this is a separate class from OrderApplicationServiceImpl.
-// No @Transactional here (unlike OrderCreateCommandHandler): this is a pure
-// read, so there's no multi-step write to keep atomic.
+// Orchestrates "track order" — see OrderCreateCommandHandler. No
+// @Transactional: a pure read, nothing to keep atomic.
 @Slf4j
 @Component
 public class OrderTrackCommandHandler {

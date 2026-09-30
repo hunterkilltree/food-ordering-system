@@ -3,7 +3,6 @@ package com.food.ordering.system.order.service.domain.ports.output.message.publi
 import com.food.ordering.system.domain.event.publisher.DomainEventPublisher;
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent;
 
-// Output port for OrderCancelledEvent — see
-// OrderCreatedPaymentRequestMessagePublisher's comment for the pattern.
+// Output port for OrderCancelledEvent — see OrderCreatedPaymentRequestMessagePublisher.
 public interface OrderCancelledPaymentRequestMessagePublisher extends DomainEventPublisher<OrderCancelledEvent> {
 }

@@ -5,10 +5,8 @@ import com.food.ordering.system.order.service.domain.valueobject.TrackingId;
 
 import java.util.Optional;
 
-// Output port for Order persistence — see CustomerRepository's comment for
-// the Dependency Inversion rationale. Looked up by TrackingId rather than
-// the internal OrderId because that's the id exposed to and used by
-// callers (see TrackOrderQuery/CreateOrderResponse).
+// Output port for Order persistence — see CustomerRepository. Looked up by
+// TrackingId, the id exposed to callers, not the internal OrderId.
 public interface OrderRepository {
 
     Order save(Order order);

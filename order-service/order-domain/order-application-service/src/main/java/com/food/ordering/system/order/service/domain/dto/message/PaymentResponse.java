@@ -9,13 +9,9 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
-// Represents an inbound message from the payment service (consumed by
-// PaymentResponseMessageListener), not an outbound command — so unlike
-// CreateOrderCommand/OrderAddress there's no @NonNull here: a message
-// deserialized off a Kafka topic isn't something this service controls
-// the shape of, and ids are plain Strings (not CustomerId/OrderId value
-// objects) because that's the natural shape of a cross-service message
-// schema; whoever handles the message parses/converts what it needs.
+// Inbound message from the payment service. No @NonNull (not this
+// service's shape to enforce); ids are plain Strings, matching the
+// cross-service message schema.
 @Getter
 @Builder
 @AllArgsConstructor

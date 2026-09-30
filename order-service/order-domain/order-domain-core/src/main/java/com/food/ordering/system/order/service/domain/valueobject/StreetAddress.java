@@ -2,14 +2,7 @@ package com.food.ordering.system.order.service.domain.valueobject;
 
 import java.util.UUID;
 
-/**
- * Value Object for a delivery address: equals()/hashCode() below compare
- * every field (city/postalCode/street), not the id — two StreetAddresses
- * with the same street details are the "same" address as a value, even
- * though each carries its own generated id (see OrderDataMapper, which
- * mints a random UUID for this id since the id has no meaning of its own
- * here beyond satisfying persistence, unlike an Entity's id).
- */
+// Value Object for a delivery address: equality by field values, not id.
 public class StreetAddress {
     private final UUID id;
     private final String city;

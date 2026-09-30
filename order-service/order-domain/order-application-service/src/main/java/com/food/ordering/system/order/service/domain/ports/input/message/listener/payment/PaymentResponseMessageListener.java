@@ -2,13 +2,8 @@ package com.food.ordering.system.order.service.domain.ports.input.message.listen
 
 import com.food.ordering.system.order.service.domain.dto.message.PaymentResponse;
 
-// Input port (mirror of DomainEventPublisher, but for things coming in
-// rather than going out): declares what the application can be told by
-// the payment service, without depending on Kafka/whatever transport
-// carries the message. A Kafka consumer adapter in the order-messaging
-// module implements this and calls into it once a PaymentResponse message
-// is deserialized; that keeps this domain-facing module free of any
-// messaging-library dependency.
+// Input port: what the payment service can tell this application,
+// without depending on Kafka/whatever carries the message.
 public interface PaymentResponseMessageListener {
 
     void paymentCompleted(PaymentResponse paymentResponse);

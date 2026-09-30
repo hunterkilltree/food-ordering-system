@@ -9,16 +9,8 @@ import com.food.ordering.system.order.service.domain.event.OrderCreatedEvent;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
 
 /**
- * Domain Service: this business logic (validating an order against a
- * restaurant's active status and product catalog, driving order state
- * transitions) doesn't naturally belong to any single entity because it
- * spans two aggregates — Order and Restaurant — and no aggregate should
- * hold a reference to another aggregate's internals. A domain service is
- * the DDD pattern for exactly that: stateless logic that coordinates
- * across aggregates, living in the domain layer rather than the
- * application layer because it's still pure business rules, not
- * orchestration (persistence, transactions, messaging — that's
- * OrderCreateCommandHandler's job).
+ * Domain Service: business logic spanning two aggregates (Order,
+ * Restaurant), so it can't live on either entity alone.
  *
  * Return domain event form the domain service
  * This means the event firing process will be on the called service

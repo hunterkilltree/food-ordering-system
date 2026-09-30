@@ -8,11 +8,8 @@ import lombok.NonNull;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-// The command-side line item inside CreateOrderCommand — distinct from
-// entity.OrderItem, the domain-side aggregate member. Same simple name,
-// different package/purpose; OrderDataMapper has to fully-qualify one of
-// them when both are needed in the same method, since Java can't import
-// two types with the same simple name into one file.
+// Command-side line item — distinct from entity.OrderItem (same simple
+// name, different package); OrderDataMapper fully-qualifies one of them.
 @Builder
 @Getter
 @AllArgsConstructor

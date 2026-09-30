@@ -9,10 +9,7 @@ import lombok.NonNull;
 import java.util.List;
 import java.util.UUID;
 
-// failureMessages has no @NonNull, unlike orderTrackingId/orderStatus
-// above: it's legitimately null/empty for an order that hasn't failed —
-// there's nothing to require here, unlike the other two fields which must
-// always be present to describe an order's current state.
+// failureMessages has no @NonNull: legitimately null when nothing failed.
 @Builder
 @Getter
 @AllArgsConstructor
