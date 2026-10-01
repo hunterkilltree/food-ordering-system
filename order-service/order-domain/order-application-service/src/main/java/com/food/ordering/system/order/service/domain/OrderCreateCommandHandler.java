@@ -39,13 +39,14 @@ public class OrderCreateCommandHandler {
                                       OrderRepository orderRepository,
                                       CustomerRepository customerRepository,
                                       RestaurantRepository restaurantRepository,
-                                      OrderDataMapper orderDataMapper) {
+                                      OrderDataMapper orderDataMapper,
+                                      ApplicationDomainEventPublisher applicationDomainEventPublisher) {
         this.orderDomainService = orderDomainService;
         this.orderRepository = orderRepository;
         this.customerRepository = customerRepository;
         this.restaurantRepository = restaurantRepository;
         this.orderDataMapper = orderDataMapper;
-        this.applicationDomainEventPublisher = ...;
+        this.applicationDomainEventPublisher = applicationDomainEventPublisher;
     }
 
     @Transactional
@@ -53,8 +54,6 @@ public class OrderCreateCommandHandler {
         checkCustomer(createOrderCommand.getCustomerId());
         Restaurant restaurant = checkRestaurant(createOrderCommand);
         Order order = orderDataMapper.createOrderCommandToOrder(createOrderCommand);
-        // The event isn't published yet (no saga/outbox wiring exists yet);
-        // captured here as the extension point for that.
         OrderCreatedEvent orderCreatedEvent = orderDomainService.validateInitialOrder(order, restaurant);
         Order orderResult = saveOrder(order);
         log.info("Order is created with id: {}", orderResult.getId().getValue());
